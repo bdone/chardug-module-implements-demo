@@ -1,0 +1,4 @@
+name = implements_test
+description = implements_test module
+core = 7.x
+php = 5.2.4

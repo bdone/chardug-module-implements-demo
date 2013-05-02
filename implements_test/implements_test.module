@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * CharDUG demo module to show hook_module_implements_alter() usage.
+ */
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ */
+function implements_test_form_page_node_form_alter(&$form, &$form_state, $form_id) {
+  $form['title']['#required'] = TRUE;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function implements_test_module_implements_alter(&$implementations, $hook) {
+  if (strpos($hook, 'form_alter') !== FALSE) {
+    if (isset($implementations['auto_entitylabel'], $implementations['implements_test'])) {
+
+      // dpm($hook);
+      // dpm($implementations);
+      $implements_test = $implementations['implements_test'];
+      unset($implementations['implements_test']);
+
+      $auto_entitylabel = $implementations['auto_entitylabel'];
+      unset($implementations['auto_entitylabel']);
+
+      $implementations['auto_entitylabel'] = $auto_entitylabel;
+      $implementations['implements_test'] = $implements_test;
+    }
+  }
+}
